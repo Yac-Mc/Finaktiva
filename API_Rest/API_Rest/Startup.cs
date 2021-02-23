@@ -1,5 +1,8 @@
 using API_Rest.CustomStartup.CustomExceptionMiddleware;
+using API_Rest.Repositories;
+using API_Rest.Repositories.Queries;
 using API_Rest.Services.Logger;
+using API_Rest.Services.Municipality;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +32,12 @@ namespace API_Rest
         {
             #region Services
             services.AddTransient<ILoggerManager, LoggerManager>();
+            services.AddTransient<IMunicipalityService, MunicipalityService>();
+            #endregion
+
+            #region Repositories
+            services.AddScoped(typeof(ICommandText<>), typeof(CommandText<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             #endregion
 
             services.AddControllers();

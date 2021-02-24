@@ -2,19 +2,18 @@ CREATE DATABASE Finaktiva_DB
 
 USE Finaktiva_DB
 
-CREATE TABLE [dbo].[Departments]
+CREATE TABLE [dbo].[Region]
 (
-	[Id] [int] IDENTITY(1,1),
-	[Code] [varchar](5) NOT NULL PRIMARY KEY,
+	[Code] [int] IDENTITY(1,1) PRIMARY KEY,
 	[Name] [varchar](100) NOT NULL
 )
 
 CREATE TABLE [dbo].[Municipality]
 (
-	[Id] [int] IDENTITY(1,1),
-	[Code] [varchar](10) NOT NULL PRIMARY KEY,
+	[Id] [int] IDENTITY(1,1) PRIMARY KEY,
+	[Code] [varchar](10) NOT NULL,
 	[Name] [varchar](100) NOT NULL,
-	[RegionCode] [varchar](5) NOT NULL,
+	[RegionCode] INT NULL,
 	[State] BIT DEFAULT(1),
-	FOREIGN KEY (RegionCode) REFERENCES [dbo].[Departments](Code)
+	FOREIGN KEY (RegionCode) REFERENCES [dbo].[Region](Code)
 )

@@ -54,7 +54,7 @@ namespace API_Rest.Repositories
 
             return String.Join(',', (from prop in listOfProperties
                                      let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                                     let type = prop.PropertyType.Name
+                                     let type = prop.PropertyType.Name.Contains("Nullable") ? prop.PropertyType.GenericTypeArguments[0].Name : prop.PropertyType.Name
                                      let value = type.Equals("DateTime") ? Convert.ToDateTime(prop.GetValue(t, null)?.ToString()).ToString("dd/MM/yyyy") : prop.GetValue(t, null)?.ToString()
                                      where Validators(attributes, type, value)
                                      select prop.Name).ToList());
@@ -77,7 +77,7 @@ namespace API_Rest.Repositories
             }
             else if (value != null && type != null
                 && (attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore")
-                && ((type.Equals("DateTime") && value != "01/01/0001") || (type.Contains("Int") && value != "0") || (type.Equals("String") && !string.IsNullOrEmpty(value))))
+                && ((type.Equals("DateTime") && value != "01/01/0001") || (type.Contains("Int") && value != "0") || ((type.Equals("String") || type.Equals("Boolean")) && !string.IsNullOrEmpty(value))))
             {
                 return true;
             }

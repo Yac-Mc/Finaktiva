@@ -6,18 +6,21 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './material/material.module';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MunicipalityComponent } from './pages/municipality/municipality.component';
-import { DepartmentComponent } from './pages/department/department.component';
+import { RegionComponent } from './pages/region/region.component';
+import { NewRegisterComponent } from './components/new-register/new-register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MunicipalityComponent,
-    DepartmentComponent
+    RegionComponent,
+    NewRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { DepartmentComponent } from './pages/department/department.component';
     HttpClientModule,
     MaterialModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

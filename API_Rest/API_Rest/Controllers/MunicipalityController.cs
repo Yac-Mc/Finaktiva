@@ -1,5 +1,4 @@
 ﻿using API_Rest.Models;
-using API_Rest.Models.Entities;
 using API_Rest.Services.Municipality;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +23,7 @@ namespace API_Rest.Controllers
 
         // GET: api/<MunicipalityController>
         [HttpGet]
-        public async Task<GenericResponse<IEnumerable<Municipality>>> Get()
+        public async Task<GenericResponse<IEnumerable<Models.Entities.Municipality>>> Get()
         {
             return await _municipalityService.GetAllMunicipalities();
         }
@@ -36,10 +35,10 @@ namespace API_Rest.Controllers
             return "value";
         }
 
-        // POST api/<MunicipalityController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("insert")]
+        public async Task<GenericResponse<bool>> PostInsert(Models.Entities.Municipality municipality)
         {
+            return await _municipalityService.InsertAsync(municipality);
         }
 
         // PUT api/<MunicipalityController>/5

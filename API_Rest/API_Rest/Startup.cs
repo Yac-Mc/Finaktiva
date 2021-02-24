@@ -3,6 +3,7 @@ using API_Rest.Repositories;
 using API_Rest.Repositories.Queries;
 using API_Rest.Services.Logger;
 using API_Rest.Services.Municipality;
+using API_Rest.Services.Region;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ namespace API_Rest
             #region Services
             services.AddTransient<ILoggerManager, LoggerManager>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();
+            services.AddTransient<IRegionService, RegionService>();
             #endregion
 
             #region Repositories

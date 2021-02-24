@@ -15,16 +15,6 @@
         <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="regionCode">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Código región</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.regionCode }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="state">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.state ? 'Activo' : 'Inactivo' }}</mat-cell>
-    </ng-container>
-
     <mat-header-row *matHeaderRowDef="deployColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: deployColumns"></mat-row>
 </mat-table>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API_Rest.Models;
+using API_Rest.Services.Region;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +12,42 @@ namespace API_Rest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentsController : ControllerBase
+    public class RegionController : ControllerBase
     {
-        // GET: api/<DepartmentsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IRegionService _regionService;
+
+        public RegionController(IRegionService regionService)
         {
-            return new string[] { "value1", "value2" };
+            _regionService = regionService;
         }
 
-        // GET api/<DepartmentsController>/5
+        // GET: api/<RegionController>
+        [HttpGet]
+        public async Task<GenericResponse<IEnumerable<Models.Entities.Region>>> Get()
+        {
+            return await _regionService.GetAllRegions();
+        }
+
+        // GET api/<RegionController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<DepartmentsController>
+        // POST api/<RegionController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<DepartmentsController>/5
+        // PUT api/<RegionController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<DepartmentsController>/5
+        // DELETE api/<RegionController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

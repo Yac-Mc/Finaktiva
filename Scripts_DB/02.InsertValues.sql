@@ -1,11 +1,16 @@
 USE Finaktiva_DB
 
-INSERT INTO [dbo].[Departments] (Code, [Name]) VALUES ('05', 'ANTIOQUIA')
-INSERT INTO [dbo].[Departments] (Code, [Name]) VALUES ('11', 'BOGOTÁ, D.C.')
-INSERT INTO [dbo].[Departments] (Code, [Name]) VALUES ('08', 'ATLÁNTICO')
+INSERT INTO [dbo].[Region] ([Name]) VALUES ('ANTIOQUIA')
+INSERT INTO [dbo].[Region] ([Name]) VALUES ('BOGOTÁ, D.C.')
+INSERT INTO [dbo].[Region] ([Name]) VALUES ('ATLÁNTICO')
 
-INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('11001', 'BOGOTÁ, D.C.', '11')
-INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('05001', 'MEDELLÍN', '05')
-INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('05002', 'ABEJORRAL', '05')
-INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('08001', 'BARRANQUILLA', '08')
-INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('08078', 'BARANOA.', '08')
+DECLARE @v_RegionCode INT = (SELECT Code FROM [dbo].[Region] WHERE [Name] = 'BOGOTÁ, D.C.')
+INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('11001', 'BOGOTÁ, D.C.', @v_RegionCode)
+
+SET @v_RegionCode = (SELECT Code FROM [dbo].[Region] WHERE [Name] = 'ANTIOQUIA')
+INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('05001', 'MEDELLÍN', @v_RegionCode)
+INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('05002', 'ABEJORRAL',@v_RegionCode)
+
+SET @v_RegionCode = (SELECT Code FROM [dbo].[Region] WHERE [Name] = 'ATLÁNTICO')
+INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('08001', 'BARRANQUILLA', @v_RegionCode)
+INSERT INTO [dbo].Municipality (Code, [Name], RegionCode) VALUES ('08078', 'BARANOA.', @v_RegionCode)

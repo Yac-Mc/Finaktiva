@@ -13,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -31,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   exports:[
     MatButtonModule,
@@ -46,6 +48,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
+    MatCheckboxModule,
   ]
 })
 export class MaterialModule { }

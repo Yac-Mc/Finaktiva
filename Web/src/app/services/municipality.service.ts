@@ -1,17 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ResponseAPI } from '../models/response-api.model';
+import { Municipality } from 'src/app/models/municipality.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MunicipalityService {
 
+  subject = new Subject<ResponseAPI>();
   private baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) { }
 
   getAllMunicipalities(){
-    return this.http.get<ResponseAPI>(`${this.baseUrl}/municipality`);
+    this.http.get<ResponseAPI>(`${this.baseUrl}/municipality`).subscribe(resp =>{
+      this.subject.next(resp);
+    });
+  }
+
+  getCurrentListener(){
+    return this.subject.asObservable();
+  }
+
+  insertMunicipality(municipality: Municipality){
+    return this.http.post<ResponseAPI>(`${this.baseUrl}/municipality/insert`, municipality);
   }
 }

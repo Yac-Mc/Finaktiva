@@ -1,6 +1,6 @@
 <div fxLayoutAlign="center center">
     <mat-form-field fxFlex="60%">
-        <input type="text" matInput placeholder="Filtrar por nombre" (keyup)="filter($event)">
+        <input type="text" matInput placeholder="Filtrar por nombre" (keyup)="filter($event)" autocomplete="off">
     </mat-form-field>
 
 </div>
@@ -15,12 +15,38 @@
         <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-mini-fab color="blue" (click)="editRegister(element)">
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Eliminar</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-mini-fab color="warn" (click)="deleteRegister(element.code)">
+        <mat-icon>delete</mat-icon>
+      </button>
+        </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="deployColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: deployColumns"></mat-row>
 </mat-table>
 
-<mat-paginator (page)="eventPager($event)" #pagination [pageSize]="recordsByPage" [pageSizeOptions]="pageCombo" [length]="totalRecords"></mat-paginator>
+<mat-paginator #pagination [pageSize]="recordsByPage" [pageSizeOptions]="pageCombo" [length]="totalRecords"></mat-paginator>
 
 <button mat-fab id="btn-add" color="warn" (click)="openDialog()">
 <mat-icon>add</mat-icon>
 </button>
+
+<div class="row mt-5">
+    <div class="col">
+        <button class="btn btn-outline-info" routerLink="/home">
+        Regresar
+    </button>
+    </div>
+</div>

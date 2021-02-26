@@ -1,7 +1,6 @@
 ﻿using API_Rest.Models;
 using API_Rest.Models.Queries;
 using API_Rest.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,12 +32,12 @@ namespace API_Rest.Services.Municipality
             municipality.State = (municipality.RegionCode == null && municipality.State) ? false : municipality.State;
             bool exists = ValidateMunicipalityInRegion(municipality);
 
-            if (!ValidateMunicipalityInRegion(municipality))
+            if (!exists)
                 await _municipality.InsertAsync(municipality);
 
             GenericResponse<bool> result = new GenericResponse<bool>()
             {
-                Message = exists ? "La región especificada ya tiene asiganado el municipio" : "Municipio agregado con éxito",
+                Message = exists ? $"La región especificada ya tiene asiganado el municipio con código {municipality.Code}" : "Municipio agregado con éxito",
                 Result = exists
             };
 
@@ -59,6 +58,32 @@ namespace API_Rest.Services.Municipality
             }
 
             return false;
+        }
+
+        public async Task<GenericResponse<bool>> DeleteRegisterAsync(int id)
+        {
+            List<Filter> listFilters = new List<Filter>
+            {
+                new Filter() { Order = 1, Column = "Id", Operator = "=", Value = id.ToString() }
+            };
+            await _municipality.DeleteByIdAsync(listFilters);
+            GenericResponse<bool> result = new GenericResponse<bool>()
+            {
+                Message = "El registro ha sido eliminado con éxito",
+                Result = true
+            };
+            return result;
+        }
+
+        public async Task<GenericResponse<bool>> EditAsync(int id, Models.Entities.Municipality municipality)
+        {
+            await _municipality.UpdateByIdAsync(municipality, id.ToString());
+            GenericResponse<bool> result = new GenericResponse<bool>()
+            {
+                Message = "El registro ha sido actualizado con éxito",
+                Result = true
+            };
+            return result;
         }
     }
 }

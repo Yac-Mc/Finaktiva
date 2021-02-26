@@ -1,0 +1,36 @@
+<form #f="ngForm" (ngSubmit)="editRegister(f)" autocomplete="off">
+    <h2 mat-dialog-title>Editar {{data.type}}</h2>
+    <mat-dialog-content>
+        <section fxLayoutAlign="center" style="margin-top: 10px; margin-bottom: 10px;">
+            <mat-card fxFlex="100%">
+                <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Ingrese nombre {{data.type}}</mat-label>
+                        <input type="text" matInput placeholder="Ej: {{data.type === 'Municipio' ? 'Medellin' : 'Antioquia' }}" name="name" [ngModel]="data.data.name" required />
+                        <mat-error>Ingresar {{data.type}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="data.type === 'Municipio'" style="width: 100%;">
+                        <mat-label>Ingrese código {{data.type}}</mat-label>
+                        <input type="text" matInput placeholder="Ej: 05001" name="code" [ngModel]="data.data.code" required />
+                        <mat-error>Ingresar código {{data.type}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="data.type === 'Municipio'" style="width: 100%;">
+                        <mat-label>Seleccione región</mat-label>
+                        <mat-select name="regionCode" (selectionChange)="selected($event)" [ngModel]="data.data.regionCode">
+                            <mat-option *ngFor="let region of regions" [value]="region.code">
+                                {{region.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-checkbox *ngIf="data.type === 'Municipio'" class="custom-checkbox-radius" style="width: 100%" [ngModel]="data.data.state" name="state">Activo</mat-checkbox>
+                </div>
+            </mat-card>
+        </section>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="true">Cerrar</button>
+        <button mat-button type="submit">Guardar</button>
+    </mat-dialog-actions>
+</form>

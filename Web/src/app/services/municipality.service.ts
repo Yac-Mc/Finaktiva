@@ -20,11 +20,19 @@ export class MunicipalityService {
     });
   }
 
+  deleteMunicipality(id: number){
+    return this.http.delete<ResponseAPI>(`${this.baseUrl}/municipality/${id}`);
+  }
+
   getCurrentListener(){
     return this.subject.asObservable();
   }
 
   insertMunicipality(municipality: Municipality){
     return this.http.post<ResponseAPI>(`${this.baseUrl}/municipality/insert`, municipality);
+  }
+
+  editMunicipality(municipality: Municipality, id: number){
+    return this.http.put<ResponseAPI>(`${this.baseUrl}/municipality/${id}`, municipality);
   }
 }

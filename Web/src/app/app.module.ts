@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MunicipalityComponent } from './pages/municipality/municipality.component';
 import { RegionComponent } from './pages/region/region.component';
 import { NewRegisterComponent } from './components/new-register/new-register.component';
+import { EditRegisterComponent } from './components/edit-register/edit-register.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NewRegisterComponent } from './components/new-register/new-register.com
     HomeComponent,
     MunicipalityComponent,
     RegionComponent,
-    NewRegisterComponent
+    NewRegisterComponent,
+    EditRegisterComponent
   ],
   imports: [
     BrowserModule,

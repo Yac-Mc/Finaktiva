@@ -8,5 +8,7 @@ namespace API_Rest.Services.Municipality
     {
         Task<GenericResponse<IEnumerable<Models.Entities.Municipality>>> GetAllMunicipalities();
         Task<GenericResponse<bool>> InsertAsync(Models.Entities.Municipality municipality);
+        Task<GenericResponse<bool>> DeleteRegisterAsync(int id);
+        Task<GenericResponse<bool>> EditAsync(int id, Models.Entities.Municipality municipality);
     }
 }

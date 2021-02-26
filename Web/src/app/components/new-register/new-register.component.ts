@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
@@ -7,15 +7,16 @@ import { Region } from 'src/app/models/region.model';
 import { RegionService } from '../../services/region.service';
 import { MunicipalityService } from '../../services/municipality.service';
 import { AlertsService } from '../../services/alerts.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-register',
   templateUrl: './new-register.component.html',
   styleUrls: ['./new-register.component.css']
 })
-export class NewRegisterComponent implements OnInit {
+export class NewRegisterComponent implements OnInit, OnDestroy {
 
-  selectedRegion: string;
+  private regionSubscription: Subscription;
   selectRegionText: string;
   regions: Region[] = [];
   constructor(@Inject(MAT_DIALOG_DATA) public type: string, private dialogRef: MatDialog,
@@ -24,7 +25,8 @@ export class NewRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.type === "Municipio"){
-      this.regionService.getAllRegions().subscribe(response => {
+      this.regionService.getAllRegions();
+      this.regionSubscription = this.regionService.getCurrentListener().subscribe(response => {
         this.regions = response.result;
       });
     }
@@ -42,12 +44,24 @@ export class NewRegisterComponent implements OnInit {
           if(!response.result){
             this.alertsService.getShowAlert(`${this.type} agregado`, response.message).then(() => this.dialogRef.closeAll());
           }else{
-            this.alertsService.getShowAlert("Error", response.message, "error").then(() => this.dialogRef.closeAll());
+            this.alertsService.getShowAlert("Error", `Error al agregar el nuevo ${this.type}... ${response.message}`, "error").then(() => this.dialogRef.closeAll());
           }
         })
       }else{
-        console.log(form);
+        this.regionService.insertRegion(form.value).subscribe(response => {
+          if(!response.result){
+            this.alertsService.getShowAlert(`${this.type} agregado`, response.message).then(() => this.dialogRef.closeAll());
+          }else{
+            this.alertsService.getShowAlert("Error", `Error al agregar el nuevo ${this.type}`, "error").then(() => this.dialogRef.closeAll());
+          }
+        })
       }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if(this.type === "Municipio"){
+      this.regionSubscription.unsubscribe();
     }
   }
 
